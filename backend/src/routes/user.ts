@@ -23,19 +23,23 @@ userRouter.post('/signup', async (c) => {
     if(!success){
         c.status(411);
         return c.json({
-            message:"Inputs not incorrect"
+            message:"Inputs are incorrect"
         })
     }
-
+    console.log("working till here 1")
+    console.log(body.email)
+    console.log(body.password)
     try{  const user=await prisma.user.create({
       data:{
-        name:body.name,
+
         email:body.email,
-        password:body.password
+        password:body.password,
+        name:body.name
       },
     })
+    console.log("working till here 2")
   
-    const token=await sign({id:user.id},c.env.JWT_SECRET)
+    const token=await sign({id:user.id},c.env.JWT_SECRET);
   
     return c.json({
       jwt: token  
@@ -44,7 +48,7 @@ userRouter.post('/signup', async (c) => {
   
     }catch(e){
       c.status(411);
-      return c.text("Invalid")
+      return c.text("Invalid breakin")
   
     }
     
